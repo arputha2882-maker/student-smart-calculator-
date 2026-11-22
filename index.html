@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Smart Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf2ff;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #aaa;
+        }
+
+        h1 {
+            color: #2457a7;
+        }
+
+        input {
+            width: 85%;
+            padding: 10px;
+            margin: 8px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+        }
+
+        button {
+            background: #2457a7;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Smart Calculator</h1>
+    <p>Student Marks Calculator</p>
+
+    <input type="number" id="s1" placeholder="Subject 1 (out of 100)" min="0" max="100">
+    <input type="number" id="s2" placeholder="Subject 2 (out of 100)" min="0" max="100">
+    <input type="number" id="s3" placeholder="Subject 3 (out of 100)" min="0" max="100">
+    <input type="number" id="s4" placeholder="Subject 4 (out of 100)" min="0" max="100">
+    <input type="number" id="s5" placeholder="Subject 5 (out of 100)" min="0" max="100">
+
+    <br><br>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+function calculate() {
+
+    let marks = [
+        Number(document.getElementById("s1").value),
+        Number(document.getElementById("s2").value),
+        Number(document.getElementById("s3").value),
+        Number(document.getElementById("s4").value),
+        Number(document.getElementById("s5").value)
+    ];
+
+    let result = document.getElementById("result");
+
+    if (marks.some(m => m < 0 || m > 100) ||
+        marks.some(m => document.getElementById("s" + (marks.indexOf(m) + 1)).value === "")) {
+        result.innerHTML = "Please enter valid marks for all subjects.";
+        return;
+    }
+
+    let total = marks.reduce((a, b) => a + b, 0);
+    let percentage = total / 5;
+
+    let status = marks.every(m => m >= 35)
+        ? "PASS"
+        : "NEEDS IMPROVEMENT";
+
+    result.innerHTML =
+        "Total Marks: " + total + " / 500<br>" +
+        "Percentage: " + percentage.toFixed(2) + "%<br>" +
+        "Result: " + status;
+}
+</script>
+
+</body>
+</html>
